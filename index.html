@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LimeMarine Art</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="script.js"></script>
+    <script defer src="script.js"></script>
 </head>
 <body>
+    <!-- Botão de alternância de idioma -->
+    <button id="language-toggle">Switch to Portuguese</button>
+
     <!-- Link para o X -->
     <a href="https://x.com/MarineLime" target="_blank">
         <button>Link X</button>
@@ -17,35 +20,53 @@
     </a>
 
     <!-- Título da Página -->
-    <h1>LimeMarine - Commissions</h1>
+    <h1 id="page-title">LimeMarine - Commissions</h1>
 
     <!-- Botões de navegação -->
     <a href="#commission-form">
-        <button>Commission Form</button>
+        <button data-lang-key="form-button">Commission Form</button>
     </a>
-    <p></p>
     <a href="#sfw-art">
-        <button>SFW Art</button>
+        <button data-lang-key="sfw-button">SFW Art</button>
     </a>
     <a href="#nsfw-art">
-        <button>NSFW Art</button>
+        <button data-lang-key="nsfw-button">NSFW Art</button>
     </a>
-    <button onclick="showWelcomeMessage()">Clique para começar!</button>
+
+    <!-- Botão de alternância de tema -->
+    <button id="theme-toggle">Change Theme</button>
+
     <!-- Seções -->
     <section id="sfw-art">
-    <h2> art SFW</h2>
-    <p>Aqui estão exemplos de arte SFW </p>
+        <h2 data-lang-key="sfw-title">SFW Art</h2>
+        <p data-lang-key="sfw-description">Here are examples of SFW art.</p>
     </section>
 
     <section id="nsfw-art">
-        <h2>art NSFW</h2>
-        <p>Aqui estão exemplos de arte NSFW</p>
+        <h2 data-lang-key="nsfw-title">NSFW Art</h2>
+        <p data-lang-key="nsfw-description">Here are examples of NSFW art.</p>
     </section>
 
     <section id="commission-form">
-        <h2>Commission-form</h2>
-        <p>Em breve, formularios aqui</p>
-    </section>
+        <h2 data-lang-key="form-title">Commission Form</h2>
+        <form>
+            <label data-lang-key="name-label">Name:</label>
+            <input type="text" name="name">
 
+            <label data-lang-key="email-label">Email:</label>
+            <input type="email" name="email">
+
+            <label data-lang-key="type-label">Type of Art:</label>
+            <select>
+                <option value="sfw" data-lang-key="option-sfw">SFW</option>
+                <option value="nsfw" data-lang-key="option-nsfw">NSFW</option>
+            </select>
+
+            <label data-lang-key="description-label">Description:</label>
+            <textarea name="description"></textarea>
+
+            <button type="submit" data-lang-key="submit-button">Submit Request</button>
+        </form>
+    </section>
 </body>
 </html>

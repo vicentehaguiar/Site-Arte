@@ -1,23 +1,37 @@
+/* Estilo Geral */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #DEF9C4;   
+    background-color: #DEF9C4;
+    color: #000;
+    transition: background-color 0.5s ease, color 0.5s ease;
 }
-h1 {
+h1, h2 {
     text-align: center;
-    color: rgb(0, 147, 49);
+    color: #094609;
 }
 button {
     background-color: #50B498;
     color: #fff;
     border: none;
     padding: 10px 20px;
+    margin: 5px;
     cursor: pointer;
     border-radius: 5px;
     font-weight: bold;
+    transition: background-color 0.3s ease;
 }
 button:hover {
-   background-color: #468585;
-   
+    background-color: #468585;
+}
+
+/* Tema Escuro */
+body.dark-mode {
+    background-color: #2b2b2b;
+    color: #fff;
+}
+body.dark-mode button {
+    background-color: #444;
+    color: #fff;
 }
