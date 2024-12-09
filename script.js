@@ -1,14 +1,13 @@
-// Objeto de Traduções
+
+// Traduções
 const translations = {
     en: {
         "page-title": "LimeMarine - Commissions",
-        "form-button": "Form",
-        "sfw-button": "SFW Art",
-        "nsfw-button": "NSFW Art",
+        "sfw-button": "Show SFW Art",
+        "nsfw-button": "Show NSFW Art",
+        "theme-toggle": "Change Theme",
         "sfw-title": "SFW Art",
-        "sfw-description": "Here are examples of SFW art.",
         "nsfw-title": "NSFW Art",
-        "nsfw-description": "Here are examples of NSFW art.",
         "form-title": "Commission Form",
         "name-label": "Name:",
         "email-label": "Email:",
@@ -20,13 +19,11 @@ const translations = {
     },
     pt: {
         "page-title": "LimeMarine - Comissões",
-        "form-button": "Formulário",
-        "sfw-button": "Arte SFW",
-        "nsfw-button": "Arte NSFW",
+        "sfw-button": "Mostrar Arte SFW",
+        "nsfw-button": "Mostrar Arte NSFW",
+        "theme-toggle": "Alterar Tema",
         "sfw-title": "Arte SFW",
-        "sfw-description": "Aqui estão exemplos de arte SFW.",
         "nsfw-title": "Arte NSFW",
-        "nsfw-description": "Aqui estão exemplos de arte NSFW.",
         "form-title": "Formulário de Comissões",
         "name-label": "Nome:",
         "email-label": "E-mail:",
@@ -42,20 +39,17 @@ const translations = {
 const themeToggleButton = document.getElementById("theme-toggle");
 themeToggleButton.addEventListener("click", () => {
     document.body.classList.toggle("dark-mode");
-    themeToggleButton.textContent =
-        document.body.classList.contains("dark-mode")
-            ? "Alterar para Tema Claro"
-            : "Alterar Tema";
 });
 
 // Alternância de Idioma
 const languageToggleButton = document.getElementById("language-toggle");
-let currentLanguage = "en";  // Idioma inicial é o inglês
+let currentLanguage = "en";
+
 languageToggleButton.addEventListener("click", () => {
     currentLanguage = currentLanguage === "en" ? "pt" : "en";
     updateLanguage(currentLanguage);
-    languageToggleButton.textContent =
-        currentLanguage === "en" ? "Alterar para Português" : "Switch to English";
+    languageToggleButton.textContent = 
+        currentLanguage === "en" ? "Switch to Portuguese" : "Mudar para Inglês";
 });
 
 function updateLanguage(lang) {
@@ -65,5 +59,47 @@ function updateLanguage(lang) {
     });
 }
 
-// Atualiza a página para o idioma inicial (inglês)
-updateLanguage("en");
+// Exibição de Galerias
+const sfwButton = document.getElementById("sfw-art-button");
+const nsfwButton = document.getElementById("nsfw-art-button");
+
+const sfwGallery = document.getElementById("sfw-gallery");
+const nsfwGallery = document.getElementById("nsfw-gallery");
+
+sfwButton.addEventListener("click", () => {
+    // Fecha a galeria NSFW com uma transição suave
+    if (nsfwGallery.classList.contains("expanded")) {
+        nsfwGallery.classList.remove("expanded");
+        nsfwButton.textContent = "Show NSFW Art";
+    }
+
+    // Usa um atraso para abrir a galeria SFW após fechar a NSFW
+    setTimeout(() => {
+        if (!sfwGallery.classList.contains("expanded")) {
+            sfwGallery.classList.add("expanded");
+            sfwButton.textContent = "Hide SFW Art";
+        } else {
+            sfwGallery.classList.remove("expanded");
+            sfwButton.textContent = "Show SFW Art";
+        }
+    }, 300); // Sincroniza com a duração da transição no CSS
+});
+
+nsfwButton.addEventListener("click", () => {
+    // Fecha a galeria SFW com uma transição suave
+    if (sfwGallery.classList.contains("expanded")) {
+        sfwGallery.classList.remove("expanded");
+        sfwButton.textContent = "Show SFW Art";
+    }
+
+    // Usa um atraso para abrir a galeria NSFW após fechar a SFW
+    setTimeout(() => {
+        if (!nsfwGallery.classList.contains("expanded")) {
+            nsfwGallery.classList.add("expanded");
+            nsfwButton.textContent = "Hide NSFW Art";
+        } else {
+            nsfwGallery.classList.remove("expanded");
+            nsfwButton.textContent = "Show NSFW Art";
+        }
+    }, 300); // Sincroniza com a duração da transição no CSS
+});
