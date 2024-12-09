@@ -8,8 +8,142 @@
     <script defer src="script.js"></script>
 </head>
 <body>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, TwitterAuthProvider, OAuthProvider, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyA7SUDqk1vazbru2VMZJd6pRno6BWxD4Is",
+          authDomain: "limemarine-art.firebaseapp.com",
+          projectId: "limemarine-art",
+          storageBucket: "limemarine-art.firebasestorage.app",
+          messagingSenderId: "708062138108",
+          appId: "1:708062138108:web:31a7cade6523c7b21d9179",
+          measurementId: "G-XYD2QYSC1F"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth();
+        const db = getFirestore(app);
+
+        // Funções de login
+        function loginWithGoogle() {
+            const provider = new GoogleAuthProvider();
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    const user = result.user;
+                    console.log(user);
+                    saveUserToDatabase(user);
+                    closeLoginModal();  // Fecha o modal ao logar
+                })
+                .catch((error) => {
+                    console.error(error.message);
+                });
+        }
+
+        function loginWithTwitter() {
+            const provider = new TwitterAuthProvider();
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    const user = result.user;
+                    console.log(user);
+                    saveUserToDatabase(user);
+                    closeLoginModal();  // Fecha o modal ao logar
+                })
+                .catch((error) => {
+                    console.error(error.message);
+                });
+        }
+
+        function loginWithDiscord() {
+            const provider = new OAuthProvider('discord.com');
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    const user = result.user;
+                    console.log(user);
+                    saveUserToDatabase(user);
+                    closeLoginModal();  // Fecha o modal ao logar
+                })
+                .catch((error) => {
+                    console.error(error.message);
+                });
+        }
+
+        function loginWithApple() {
+            const provider = new OAuthProvider('apple.com');
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    const user = result.user;
+                    console.log(user);
+                    saveUserToDatabase(user);
+                    closeLoginModal();  // Fecha o modal ao logar
+                })
+                .catch((error) => {
+                    console.error(error.message);
+                });
+        }
+
+        function loginWithEmail() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    console.log(user);
+                    saveUserToDatabase(user);
+                    closeLoginModal();  // Fecha o modal ao logar
+                })
+                .catch((error) => {
+                    console.error(error.message);
+                });
+        }
+
+        // Função para salvar dados do usuário no Firestore
+        function saveUserToDatabase(user) {
+            const userRef = doc(db, "users", user.uid);
+            setDoc(userRef, {
+                email: user.email,
+                displayName: user.displayName,
+                photoURL: user.photoURL
+            }).then(() => {
+                console.log("User saved to database");
+            }).catch((error) => {
+                console.error("Error saving user to database: ", error);
+            });
+        }
+
+        // Função para fechar o modal
+        function closeLoginModal() {
+            const modal = document.getElementById('login-modal');
+            modal.style.display = 'none';
+        }
+
+        // Função para abrir o modal
+        function openLoginModal() {
+            const modal = document.getElementById('login-modal');
+            modal.style.display = 'block';
+        }
+
+        // Fechar o modal quando o usuário clicar fora dele
+        window.onclick = function(event) {
+            const modal = document.getElementById('login-modal');
+            if (event.target == modal) {
+                closeLoginModal();
+            }
+        }
+    </script>
+
     <!-- Botão de alternância de idioma -->
     <button id="language-toggle">Switch to Portuguese</button>
+    
+    <!-- Botão de alternância de tema -->
+    <button id="theme-toggle" data-lang-key="theme-toggle">Change Theme</button>
 
     <!-- Link para o X -->
     <a href="https://x.com/MarineLime" target="_blank">
@@ -20,31 +154,45 @@
     </a>
 
     <!-- Título da Página -->
-    <h1 id="page-title">LimeMarine - Commissions</h1>
+    <h1 data-lang-key="page-title">LimeMarine - Commissions</h1> 
 
     <!-- Botões de navegação -->
-    <a href="#commission-form">
-        <button data-lang-key="form-button">Commission Form</button>
-    </a>
-    <a href="#sfw-art">
-        <button data-lang-key="sfw-button">SFW Art</button>
-    </a>
-    <a href="#nsfw-art">
-        <button data-lang-key="nsfw-button">NSFW Art</button>
-    </a>
+    <button id="sfw-art-button" data-lang-key="sfw-button">Show SFW Art</button>
+    <button id="nsfw-art-button" data-lang-key="nsfw-button">Show NSFW Art</button>
 
-    <!-- Botão de alternância de tema -->
-    <button id="theme-toggle">Change Theme</button>
+    <!-- Botão de login -->
+    <button id="login-button" onclick="openLoginModal()">Login</button>
 
-    <!-- Seções -->
-    <section id="sfw-art">
-        <h2 data-lang-key="sfw-title">SFW Art</h2>
-        <p data-lang-key="sfw-description">Here are examples of SFW art.</p>
+    <!-- Formulário de Login (Modal) -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <h2>Login</h2>
+            <button onclick="loginWithGoogle()">Login with Google</button>
+            <button onclick="loginWithTwitter()">Login with Twitter</button>
+            <button onclick="loginWithDiscord()">Login with Discord</button>
+            <button onclick="loginWithApple()">Login with Apple</button>
+
+            <h3>Or login with email:</h3>
+            <input type="email" id="email" placeholder="Email">
+            <input type="password" id="password" placeholder="Password">
+            <button onclick="loginWithEmail()">Login</button>
+        </div>
+    </div>
+
+    <!-- Seções de arte -->
+    <section id="sfw-art" class="art-section">
+        <div class="art-gallery" id="sfw-gallery">
+            <img src="imagens/testeSFW1.jpg" alt="SFW Art 1" class="art-item">
+            <img src="imagens/testeSFW2.jpg" alt="SFW Art 2" class="art-item">
+        </div>
     </section>
 
-    <section id="nsfw-art">
-        <h2 data-lang-key="nsfw-title">NSFW Art</h2>
-        <p data-lang-key="nsfw-description">Here are examples of NSFW art.</p>
+    <section id="nsfw-art" class="art-section">
+        <div class="art-gallery" id="nsfw-gallery">
+            <img src="imagens/testeNSFW1.jpg" alt="NSFW Art 1" class="art-item">
+            <img src="imagens/testeNSFW2.jpg" alt="NSFW Art 2" class="art-item">
+        </div>
     </section>
 
     <section id="commission-form">

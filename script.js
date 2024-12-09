@@ -1,14 +1,12 @@
-// Objeto de Traduções
+// Traduções
 const translations = {
     en: {
         "page-title": "LimeMarine - Commissions",
-        "form-button": "Form",
-        "sfw-button": "SFW Art",
-        "nsfw-button": "NSFW Art",
+        "sfw-button": "Show SFW Art",
+        "nsfw-button": "Show NSFW Art",
+        "theme-toggle": "Change Theme",
         "sfw-title": "SFW Art",
-        "sfw-description": "Here are examples of SFW art.",
         "nsfw-title": "NSFW Art",
-        "nsfw-description": "Here are examples of NSFW art.",
         "form-title": "Commission Form",
         "name-label": "Name:",
         "email-label": "Email:",
@@ -20,13 +18,11 @@ const translations = {
     },
     pt: {
         "page-title": "LimeMarine - Comissões",
-        "form-button": "Formulário",
-        "sfw-button": "Arte SFW",
-        "nsfw-button": "Arte NSFW",
+        "sfw-button": "Mostrar Arte SFW",
+        "nsfw-button": "Mostrar Arte NSFW",
+        "theme-toggle": "Alterar Tema",
         "sfw-title": "Arte SFW",
-        "sfw-description": "Aqui estão exemplos de arte SFW.",
         "nsfw-title": "Arte NSFW",
-        "nsfw-description": "Aqui estão exemplos de arte NSFW.",
         "form-title": "Formulário de Comissões",
         "name-label": "Nome:",
         "email-label": "E-mail:",
@@ -42,20 +38,17 @@ const translations = {
 const themeToggleButton = document.getElementById("theme-toggle");
 themeToggleButton.addEventListener("click", () => {
     document.body.classList.toggle("dark-mode");
-    themeToggleButton.textContent =
-        document.body.classList.contains("dark-mode")
-            ? "Alterar para Tema Claro"
-            : "Alterar Tema";
 });
 
 // Alternância de Idioma
 const languageToggleButton = document.getElementById("language-toggle");
-let currentLanguage = "en";  // Idioma inicial é o inglês
+let currentLanguage = "en";
+
 languageToggleButton.addEventListener("click", () => {
     currentLanguage = currentLanguage === "en" ? "pt" : "en";
     updateLanguage(currentLanguage);
-    languageToggleButton.textContent =
-        currentLanguage === "en" ? "Alterar para Português" : "Switch to English";
+    languageToggleButton.textContent = 
+        currentLanguage === "en" ? "Switch to Portuguese" : "Mudar para Inglês";
 });
 
 function updateLanguage(lang) {
@@ -64,6 +57,40 @@ function updateLanguage(lang) {
         element.textContent = translations[lang][key];
     });
 }
+// Alterna a visibilidade das seções de arte
+document.getElementById('sfw-art-button').addEventListener('click', () => {
+    document.getElementById('sfw-art').classList.add('active');
+    document.getElementById('nsfw-art').classList.remove('active');
+});
 
-// Atualiza a página para o idioma inicial (inglês)
-updateLanguage("en");
+document.getElementById('nsfw-art-button').addEventListener('click', () => {
+    document.getElementById('nsfw-art').classList.add('active');
+    document.getElementById('sfw-art').classList.remove('active');
+});
+
+// Mostrar o modal ao clicar no botão de login
+document.getElementById('login-modal').style.display = 'block';
+// Alterna a visibilidade das seções de arte
+document.getElementById('sfw-art-button').addEventListener('click', () => {
+    document.getElementById('sfw-art').classList.add('active');
+    document.getElementById('nsfw-art').classList.remove('active');
+});
+
+document.getElementById('nsfw-art-button').addEventListener('click', () => {
+    document.getElementById('nsfw-art').classList.add('active');
+    document.getElementById('sfw-art').classList.remove('active');
+});
+
+// Mostrar o modal ao clicar no botão de login
+function openLoginModal() {
+    const modal = document.getElementById('login-modal');
+    modal.style.display = 'block';
+}
+
+// Fechar o modal quando o usuário clicar fora dele
+window.onclick = function(event) {
+    const modal = document.getElementById('login-modal');
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
+}
