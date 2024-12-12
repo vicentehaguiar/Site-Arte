@@ -1,3 +1,9 @@
+
+
+
+/* Outros estilos do seu site */
+
+/* Estilos Básicos */
 /* Modal (janela flutuante) */
 .modal {
     display: none; /* Esconde o modal por padrão */
@@ -56,14 +62,24 @@ body {
     flex-direction: column;
     align-items: center; /* Centraliza tudo horizontalmente */
     justify-content: start; /* Organiza tudo de cima para baixo */
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza tudo horizontalmente */
+    justify-content: start; /* Organiza tudo de cima para baixo */
     background-color: #DEF9C4;
 }
 
+
 h1, h2 {
+    position: relative; /* Fixa a posição do título */
     position: relative; /* Fixa a posição do título */
     text-align: center;
     margin: 20px 0; /* Evita impacto de margens dinâmicas */
+    margin: 20px 0; /* Evita impacto de margens dinâmicas */
 }
+
+/* Botões */
 
 /* Botões */
 button {
@@ -78,6 +94,7 @@ button {
     transition: background-color 0.3s ease;
 }
 
+
 button:hover {
     background-color: #468585;
 }
@@ -85,13 +102,105 @@ button:hover {
 /* Tema Escuro */
 body.dark-mode {
     background-color: #0f1d14;
+    background-color: #0f1d14;
     color: #fff;
     transition: background-color 0.5s ease, color 0.5s ease;
+    transition: background-color 0.5s ease, color 0.5s ease;
 }
+
 
 body.dark-mode button {
     background-color: #444;
     color: #fff;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+body.dark-mode #commission-form {
+    background-color: #19352c;
+    color: #fff;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+body.dark-mode #commission-form {
+
+}
+/* Galerias de Arte */
+.art-gallery.art-section {
+    position: relative;
+    min-height: 400px; /* Ajuste conforme o tamanho esperado da galeria */
+}
+
+.art-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    max-height: 0; /* Inicialmente oculta */
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out; /* Suaviza altura e opacidade */
+    opacity: 0; /* Oculta visualmente */
+}
+
+.art-gallery.expanded {
+    max-height: 1000px; /* Ajuste baseado no conteúdo real */
+    opacity: 1; /* Torna visível */
+}
+
+.art-item {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.art-item:hover {
+    transform: scale(1.1); /* Efeito ao passar o mouse */
+}
+
+/* Formulário de Comissões */
+#commission-form {
+    margin: 20px;
+    padding: 20px;
+    background-color: #9CDBA6;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+#commission-form input, #commission-form select, #commission-form textarea {
+    width: 100%;
+    padding: 9px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+#commission-form button {
+    width: 100%;
+    background-color: #50B498;
+    color: #ffffff;
+    transition: background-color 0.3s ease;
+}
+
+#commission-form button:hover {
+    background-color: #468585;
+    transition: background-color 0.3s ease;
+}
+
+
+/* Layout Responsivo */
+@media (max-width: 768px) {
+    .art-gallery {
+        flex-direction: column;
+    }
+
+    #commission-form {
+        width: 90%;
+        margin: 10px auto;
+    }
+}
     transition: background-color 0.5s ease, color 0.5s ease;
 }
 
